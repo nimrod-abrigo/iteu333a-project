@@ -1,9 +1,7 @@
 public class Test {
     public static void main(String[] args){
         int i = 0;
-		kung(i==1){
-			//coomment
-			System.labas.iprint("kumusta mundo");
-		}
+	//coomment
+	iprint("kumusta mundo");
 	}
 }
