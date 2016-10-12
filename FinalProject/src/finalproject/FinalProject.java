@@ -23,10 +23,8 @@ public class FinalProject {
             if(str.contains("//")){
                 continue;
             }
-            //replaces kung with if
-            /*str = str.replaceAll("kung", "if");
-            str = str.replaceAll("labas", "out");
-            str = str.replaceAll("iprint", "println");*/
+            //replaces iprint to System.out.println
+            str = str.replaceAll("iprint", "System.out.println");
 
             writer.println(str);
         }
