@@ -20,10 +20,13 @@ public class FinalProject {
 
         while (sc.hasNext()) {
             String str = sc.nextLine();
+            if(str.contains("//")){
+                continue;
+            }
             //replaces kung with if
-            str = str.replaceAll("kung", "if");
+            /*str = str.replaceAll("kung", "if");
             str = str.replaceAll("labas", "out");
-            str = str.replaceAll("iprint", "println");
+            str = str.replaceAll("iprint", "println");*/
 
             writer.println(str);
         }
