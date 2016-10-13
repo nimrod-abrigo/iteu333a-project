@@ -25,7 +25,7 @@ public class FinalProject {
             }
             //replaces iprint to System.out.println
             str = str.replaceAll("iprint", "System.out.println");
-
+            
             writer.println(str);
         }
         writer.close();
