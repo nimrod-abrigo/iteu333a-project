@@ -18,6 +18,7 @@ public class FinalProject {
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         Scanner sc = new Scanner(new FileReader("input.txt"));
         Set<String> variables = new HashSet<String>();
+        Set<String> strVar = new HashSet<String>();
 
         //reads the file "input.txt"
         PrintWriter writer = new PrintWriter("Test.java", "UTF-8");
@@ -39,6 +40,7 @@ public class FinalProject {
                     } else if (regexChecker("String [a-zA-Z]{1,}[0-9_]* [=] [\"][a-zA-Z0-9 ]*[\"][;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
+                        strVar.add(getVariable(str));
                     } else if (regexChecker("float [a-zA-Z]{1,}[0-9_]* [=] [+-]\\d{1,8}[.]\\d{1,8}[;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
@@ -49,17 +51,16 @@ public class FinalProject {
                                 str = str.replace("printVar", "System.out.println");
                                 writer.println(str);
                             } else {
-                                writer.println(str+"//Variable not declared");
+                                writer.println(str+" //Variable not declared");
                             }
                         }
                     } else {
-                        writer.println(str+"//May syntax error");
+                        writer.println(str+" //May syntax error");
                     }
                 }
             } else {
-                writer.println(str+"//Walang Semi Colon");
+                writer.println(str+" //Walang Semi Colon");
             }
-            //replaces iprint to System.out.println
         }
         writer.println("}");
         writer.println("}");
