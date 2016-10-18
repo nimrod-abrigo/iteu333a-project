@@ -6,10 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +17,7 @@ public class FinalProject {
 
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         Scanner sc = new Scanner(new FileReader("input.txt"));
-        List variables = new ArrayList();
+        Set<String> variables = new HashSet<String>();
 
         //reads the file "input.txt"
         PrintWriter writer = new PrintWriter("Test.java", "UTF-8");
@@ -28,32 +28,36 @@ public class FinalProject {
             String str = sc.nextLine();
             if (str.contains("//")) {
                 continue;
-            }
-            if (str.contains(";")) {
+            } else if (str.contains(";")) {
                 if (str.charAt(str.length() - 1) == ';') {
                     if (regexChecker("iprint[(][\"][a-zA-Z0-9 -+*/><{}:,']*[\"][)][;]", str)) {
                         str = str.replace("iprint", "System.out.println");
                         writer.println(str);
-                    } else if (regexChecker("int [a-zA-Z]*[0-9]* [=] [0-9]{1,8}[;]", str)) {
+                    } else if (regexChecker("int [a-zA-Z]{1,}[0-9_]* [=] [0-9]{1,8}[;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
-                    } else if (regexChecker("String [a-zA-Z]{1,}[0-9]* [=] [\"][a-zA-Z0-9 ]*[\"][;]", str)) {
+                    } else if (regexChecker("String [a-zA-Z]{1,}[0-9_]* [=] [\"][a-zA-Z0-9 ]*[\"][;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
-                    } else if (regexChecker("float [a-zA-Z]{1,}[0-9]* [=] [+-]\\d{1,8}[.]\\d{1,8}[;]", str)) {
+                    } else if (regexChecker("float [a-zA-Z]{1,}[0-9_]* [=] [+-]\\d{1,8}[.]\\d{1,8}[;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
-                    } else if (str.contains("printVar[(][a-zA-Z0-9 -+*/><{}:,']*[)][;]")) {
-                        str = str.replace("printVar", "System.out.println");
-                        writer.println(str);
+                    } else if (regexChecker("printVar[(][a-zA-Z]{1,}[0-9_]*[)][;]", str)) {
+                        if (getVarFromPrint(str) != "wala") {
+                            String variable = getVarFromPrint(str);
+                            if (variables.contains(variable)) {
+                                str = str.replace("printVar", "System.out.println");
+                                writer.println(str);
+                            } else {
+                                writer.println(str+"//Variable not declared");
+                            }
+                        }
                     } else {
-                        writer.println("//May syntax error");
-                        writer.println(str);
+                        writer.println(str+"//May syntax error");
                     }
                 }
             } else {
-                writer.println("//Walang Semi Colon");
-                writer.println(str);
+                writer.println(str+"//Walang Semi Colon");
             }
             //replaces iprint to System.out.println
         }
@@ -84,9 +88,20 @@ public class FinalProject {
         String[] parts = input.split(" ");
         return parts[1];
     }
-    
-    public static String getVarFromPrint(String input){
-        return "hahaha";
+
+    public static String getVarFromPrint(String input) {
+        Pattern checkRegex = Pattern.compile("[(][a-zA-Z]{1,}[0-9_]*[)]");
+        Matcher regexMatcher = checkRegex.matcher(input);
+
+        while (regexMatcher.find()) {
+            if (regexMatcher.group().length() != 0) {
+                String var = regexMatcher.group();
+                var = var.replace("(", "");
+                var = var.replace(")", "");
+                return var;
+            }
+        }
+        return "wala";
     }
 
 }
