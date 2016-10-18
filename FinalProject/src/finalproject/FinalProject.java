@@ -18,33 +18,34 @@ public class FinalProject {
         //reads the file "input.txt"
         PrintWriter writer = new PrintWriter("Test.java", "UTF-8");
 
+        writer.println("public class Test {");
+        writer.println("public static void main(String[] args){");
         while (sc.hasNextLine()) {
             String str = sc.nextLine();
             if (str.contains("//")) {
                 continue;
-            }else if (str.contains("public")) {
-                writer.println(str);
-            }else if (str.contains("int")) {
-                writer.println(str);
-            }else if (str.contains("String")) {
-                writer.println(str);
-            }else if (str.contains("iprint")) {
-                str = str.replace("iprint", "System.out.println");
-                writer.println(str);
-            }else if (str.contains("{")) {
-                writer.println(str);
-            }else if (str.contains("}")) {
-                writer.println(str);
-            } else{
-                System.out.println(str);
+            }
+            if (str.contains(";")) {
+                if (str.charAt(str.length()-1) == ';') {
+                    if(str.contains("int")){
+                        //[i][n][t][ ]\w*[ ][=][ ]\d{1,8}[;]
+                    }
+                    if (str.contains("String")) {
+                        
+                        writer.println(str);
+                    }
+                    if (str.contains("iprint")) {
+                        str = str.replace("iprint", "System.out.println");
+                        writer.println(str);
+                    }
+                }
+            } else {
                 break;
             }
-            
             //replaces iprint to System.out.println
-           
-            
         }
-
+        writer.println("}");
+        writer.println("}");
         writer.close();
         /*List cmdAndArgs = Arrays.asList("cmd", "/c", "run.bat");
         File dir = new File(System.getProperty("user.dir"));
@@ -53,7 +54,5 @@ public class FinalProject {
         pb.directory(dir);
         Process p = pb.start();*/
     }
-
-    
 
 }
