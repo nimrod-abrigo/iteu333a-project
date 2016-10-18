@@ -1,9 +1,8 @@
-public class Test {
-    public static void main(String[] args){
-        int i = 0;
-	String pi = "hi";
-	//coomment
-	iprint("kumusta mundo");
-	iprint(pi);
-	}
-}
+int i = 0;
+int j = 0;
+int k = 0;
+String num = "hello world";
+//coomment
+iprint("kumusta mundo");
+iprint("hahahaah");
+printVar(i);
