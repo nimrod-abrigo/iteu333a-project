@@ -14,12 +14,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FinalProject {
-
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         Scanner sc = new Scanner(new FileReader("input.txt"));
         Set<String> variables = new HashSet<String>();
-        Set<String> strVar = new HashSet<String>();
-
+        Set<String> strVar = new HashSet<String>(); 
+        boolean error = false;
+    
         //reads the file "input.txt"
         PrintWriter writer = new PrintWriter("Test.java", "UTF-8");
 
@@ -61,7 +61,41 @@ public class FinalProject {
             } else {
                 writer.println(str+" //Walang Semi Colon");
             }
+            
+            String checkSoutPattern = "(^iprint\\(*.*\\)*)";
+            Pattern checkPattern = Pattern.compile(checkSoutPattern);
+            Matcher checkMatch = checkPattern.matcher(str);
+             if(checkMatch.find()){
+                error = true;
+                break;
+            }
+            
+            String soutPattern = "(iprint\\(.*\\);)";
+            Pattern sout = Pattern.compile(soutPattern);
+            Matcher soutmatcher = sout.matcher(str);
+            if(soutmatcher.find()){
+                String hold = soutmatcher.group(0).substring(19);
+                str = str.replaceAll("iprint\\(.*\\);", "System.out.println"+hold);
+            }
+            String checkLengthPattern = "(checkVar\\(.*\\);)";
+            Pattern lengthPattern = Pattern.compile(checkLengthPattern);
+            Matcher lengthMatch = lengthPattern.matcher(str);
+            if(lengthMatch.find())
+            {
+                String hold = lengthMatch.group(0).substring(9);
+                System.out.println("Number of hold = " + hold);
+                String soutLengthPattern = "([a-z0-9A-Z]*[+][a-z0-9A-Z]*)";
+                Pattern Patternout = Pattern.compile(soutLengthPattern);
+                Matcher soutMatch = Patternout.matcher(hold);
+                 if(soutMatch.find()){
+                        String[] holdarr = soutMatch.group(0).split("[+]");
+                        str = str.replaceAll("checkVar\\(.*\\);", "System.out.println(" + holdarr[0] + ".length()+" + holdarr[1] + ".length());");
+                    }
+            }
+            writer.println(str);
         }
+        if(!(error)){
+
         writer.println("}");
         writer.println("}");
         writer.close();
@@ -71,6 +105,7 @@ public class FinalProject {
         ProcessBuilder pb = new ProcessBuilder(cmdAndArgs);
         pb.directory(dir);
         Process p = pb.start();*/
+    }
     }
 
     public static boolean regexChecker(String theRegex, String str2Check) {

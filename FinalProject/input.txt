@@ -5,5 +5,11 @@ String num = "hello world";
 //coomment
 iprint("kumusta mundo");
 iprint("hahahaah");
+iprint("y4met+3");
+iprint("y4met+3+"pogi");
+iprint("iprint");
+
+checkVar(y4Amet+3);
+
 printVar(k_1);
 printVar(num);
