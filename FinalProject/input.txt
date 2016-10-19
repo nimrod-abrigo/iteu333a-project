@@ -2,6 +2,8 @@ int i = 0;
 int j = 0;
 int k_1 = 0;
 String num = "hello world";
+String word1 = "Pedro";
+String word2 = "Penduco";
 //coomment
 iprint("kumusta mundo");
 iprint("hahahaah");
@@ -13,3 +15,8 @@ checkVar(y4Amet+3);
 
 printVar(k_1);
 printVar(num);
+
+//Output: PedroPenduco
+Concat(word1+word2);
+//Output: HelloWorld
+Concat("Hello"+"World");
