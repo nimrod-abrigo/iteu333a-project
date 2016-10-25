@@ -18,6 +18,7 @@ iprint(average);
 
 //print string length
 getHaba(word1);
+getHaba("test");
 
 //Output: PedroPenduco
 Concat(word1+word2);

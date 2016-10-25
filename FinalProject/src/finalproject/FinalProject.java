@@ -48,8 +48,15 @@ public class FinalProject {
                                 writer.println(str + " //Variable not declared");
                             }
                         }
-                    } else if (regexChecker("getHaba[(][a-zA-Z]*[0-9_]*[)][;]", str)) {
-                        
+                    } else if (regexChecker("getHaba[(][\"][a-zA-Z0-9 -+*/><{}:,']*[\"][)][;]", str)) {
+                        if (getHabaString(str) != "wala") {
+                            writer.println("String input = "+getHabaString(str)+";");
+                            str = str.replace("getHaba", "System.out.println");
+                            str = str.replace(getHabaString(str), "input.length()");
+                            writer.println(str);
+                        }else{
+                            writer.println(str + " //Syntax Error");
+                        }
                     } else if (regexChecker("getHaba[(][a-zA-Z]*[0-9_]*[)][;]", str)) {
                         if (getVarFromPrint(str) != "wala") {
                             String variable = getVarFromPrint(str);
@@ -109,6 +116,21 @@ public class FinalProject {
 
     public static String getVarFromPrint(String input) {
         Pattern checkRegex = Pattern.compile("[(][a-zA-Z]{1,}[0-9_]*[)]");
+        Matcher regexMatcher = checkRegex.matcher(input);
+
+        while (regexMatcher.find()) {
+            if (regexMatcher.group().length() != 0) {
+                String var = regexMatcher.group();
+                var = var.replace("(", "");
+                var = var.replace(")", "");
+                return var;
+            }
+        }
+        return "wala";
+    }
+    
+    public static String getHabaString(String input){
+        Pattern checkRegex = Pattern.compile("[(][\"][a-zA-Z]{1,}[0-9_]*[\"][)]");
         Matcher regexMatcher = checkRegex.matcher(input);
 
         while (regexMatcher.find()) {
