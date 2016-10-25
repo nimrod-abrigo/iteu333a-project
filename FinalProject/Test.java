@@ -17,8 +17,8 @@ System.out.println(num);
 System.out.println(average);
 
 System.out.println(word1.length());
-String input = "test";
-System.out.println(input.length());
+String programInput = "test";
+System.out.println(programInput.length());
 
 Concat(word1+word2); //May syntax error
 Concat("Hello"+"World"); //May syntax error

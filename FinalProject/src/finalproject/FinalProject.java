@@ -50,9 +50,9 @@ public class FinalProject {
                         }
                     } else if (regexChecker("getHaba[(][\"][a-zA-Z0-9 -+*/><{}:,']*[\"][)][;]", str)) {
                         if (getHabaString(str) != "wala") {
-                            writer.println("String input = "+getHabaString(str)+";");
+                            writer.println("String programInput = "+getHabaString(str)+";");
                             str = str.replace("getHaba", "System.out.println");
-                            str = str.replace(getHabaString(str), "input.length()");
+                            str = str.replace(getHabaString(str), "programInput.length()");
                             writer.println(str);
                         }else{
                             writer.println(str + " //Syntax Error");
