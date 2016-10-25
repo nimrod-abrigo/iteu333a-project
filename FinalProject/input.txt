@@ -1,23 +1,23 @@
 int i = 0;
 int j = 0;
 int k_1 = 0;
+float average = 99.1131;
+
 String num = "hello world";
 String word1 = "Pedro";
 String word2 = "Penduco";
-//coomment
+
+//print
 iprint("kumusta mundo");
 iprint("hahahaah");
-iprint("y4met+3");
-iprint("y4met+3+"pogi");
-iprint("iprint");
-getHaba("Hello World");
-getHaba(variable);
-getHaba();
 
-checkVar(y4Amet+3);
+//print Variables
+iprint(k_1);
+iprint(num);
+iprint(average);
 
-printVar(k_1);
-printVar(num);
+//print string length
+getHaba(word1);
 
 //Output: PedroPenduco
 Concat(word1+word2);

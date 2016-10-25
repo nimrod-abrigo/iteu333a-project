@@ -14,12 +14,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FinalProject {
+
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException, IOException {
         Scanner sc = new Scanner(new FileReader("input.txt"));
         Set<String> variables = new HashSet<String>();
-        Set<String> strVar = new HashSet<String>(); 
+        Set<String> strVar = new HashSet<String>();
         boolean error = false;
-    
+
         //reads the file "input.txt"
         PrintWriter writer = new PrintWriter("Test.java", "UTF-8");
 
@@ -29,48 +30,54 @@ public class FinalProject {
             String str = sc.nextLine();
             if (str.contains("//")) {
                 continue;
+            } else if (str.length() == 0) {
+                writer.println();
+                continue;
             } else if (str.contains(";")) {
                 if (str.charAt(str.length() - 1) == ';') {
                     if (regexChecker("iprint[(][\"][a-zA-Z0-9 -+*/><{}:,']*[\"][)][;]", str)) {
                         str = str.replace("iprint", "System.out.println");
                         writer.println(str);
-                    } else if (regexChecker("getHaba[(][\"][a-zA-Z0-9 ]*[\"][)][;]", str)) {
-                        str = str.replace("getHaba", "System.out.println");
-                        writer.println(str);
-                    } else if (regexChecker("getHaba[(][a-zA-Z0-9_]*[)][;]", str)) {
-                        str = str.replace("getHaba", "System.out.println");
-                        writer.println(str);
-                    } else if (regexChecker("getHaba[(][a-zA-Z]*[)][;]",str)){
-                        str = str.replace("getHaba", "System.out.println");
-                        writer.println(str);
-                    } else if (regexChecker("int [a-zA-Z]{1,}[0-9_]* [=] [0-9]{1,8}[;]", str)) {
+                    } else if (regexChecker("iprint[(][a-zA-Z]*[0-9_]*[)][;]", str)) {
+                        if (getVarFromPrint(str) != "wala") {
+                            String variable = getVarFromPrint(str);
+                            if (variables.contains(variable)) {
+                                str = str.replace("iprint", "System.out.println");
+                                writer.println(str);
+                            } else {
+                                writer.println(str + " //Variable not declared");
+                            }
+                        }
+                    } else if (regexChecker("getHaba[(][a-zA-Z]*[0-9_]*[)][;]", str)) {
+                        
+                    } else if (regexChecker("getHaba[(][a-zA-Z]*[0-9_]*[)][;]", str)) {
+                        if (getVarFromPrint(str) != "wala") {
+                            String variable = getVarFromPrint(str);
+                            if (variables.contains(variable)) {
+                                str = str.replace("getHaba", "System.out.println");
+                                str = str.replace(variable, variable + ".length()");
+                                writer.println(str);
+                            } else {
+                                writer.println(str + " //Variable not declared");
+                            }
+                        }
+                    } else if (regexChecker("int [a-zA-Z]{1,}[0-9_]* [=] [-]*[0-9]{1,8}[;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
                     } else if (regexChecker("String [a-zA-Z]{1,}[0-9_]* [=] [\"][a-zA-Z0-9 ]*[\"][;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
                         strVar.add(getVariable(str));
-                    } else if (regexChecker("float [a-zA-Z]{1,}[0-9_]* [=] [+-]\\d{1,8}[.]\\d{1,8}[;]", str)) {
+                    } else if (regexChecker("float [a-zA-Z]{1,}[0-9_]* [=] [-]*\\d{1,8}[.]\\d{1,8}[;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
-                    } else if (regexChecker("printVar[(][a-zA-Z]{1,}[0-9_]*[)][;]", str)) {
-                        if (getVarFromPrint(str) != "wala") {
-                            String variable = getVarFromPrint(str);
-                            if (variables.contains(variable)) {
-                                str = str.replace("printVar", "System.out.println");
-                                writer.println(str);
-                            } else {
-                                writer.println(str+" //Variable not declared");
-                            }
-                        }
                     } else {
-                        writer.println(str+" //May syntax error");
+                        writer.println(str + " //May syntax error");
                     }
                 }
             } else {
-                writer.println(str+" //Walang Semi Colon");
+                writer.println(str + " //Walang Semi Colon");
             }
-            writer.println(str);
         }
         writer.println("}");
         writer.println("}");
@@ -82,6 +89,7 @@ public class FinalProject {
         pb.directory(dir);
         Process p = pb.start();*/
     }
+
     public static boolean regexChecker(String theRegex, String str2Check) {
         Pattern checkRegex = Pattern.compile(theRegex);
         Matcher regexMatcher = checkRegex.matcher(str2Check);
