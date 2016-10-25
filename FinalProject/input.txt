@@ -10,6 +10,9 @@ iprint("hahahaah");
 iprint("y4met+3");
 iprint("y4met+3+"pogi");
 iprint("iprint");
+getHaba("Hello World");
+getHaba(variable);
+getHaba();
 
 checkVar(y4Amet+3);
 

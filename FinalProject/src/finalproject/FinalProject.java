@@ -34,6 +34,15 @@ public class FinalProject {
                     if (regexChecker("iprint[(][\"][a-zA-Z0-9 -+*/><{}:,']*[\"][)][;]", str)) {
                         str = str.replace("iprint", "System.out.println");
                         writer.println(str);
+                    } else if (regexChecker("getHaba[(][\"][a-zA-Z0-9 ]*[\"][)][;]", str)) {
+                        str = str.replace("getHaba", "System.out.println");
+                        writer.println(str);
+                    } else if (regexChecker("getHaba[(][a-zA-Z0-9_]*[)][;]", str)) {
+                        str = str.replace("getHaba", "System.out.println");
+                        writer.println(str);
+                    } else if (regexChecker("getHaba[(][a-zA-Z]*[)][;]",str)){
+                        str = str.replace("getHaba", "System.out.println");
+                        writer.println(str);
                     } else if (regexChecker("int [a-zA-Z]{1,}[0-9_]* [=] [0-9]{1,8}[;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
@@ -61,41 +70,8 @@ public class FinalProject {
             } else {
                 writer.println(str+" //Walang Semi Colon");
             }
-            
-            String checkSoutPattern = "(^iprint\\(*.*\\)*)";
-            Pattern checkPattern = Pattern.compile(checkSoutPattern);
-            Matcher checkMatch = checkPattern.matcher(str);
-             if(checkMatch.find()){
-                error = true;
-                break;
-            }
-            
-            String soutPattern = "(iprint\\(.*\\);)";
-            Pattern sout = Pattern.compile(soutPattern);
-            Matcher soutmatcher = sout.matcher(str);
-            if(soutmatcher.find()){
-                String hold = soutmatcher.group(0).substring(19);
-                str = str.replaceAll("iprint\\(.*\\);", "System.out.println"+hold);
-            }
-            String checkLengthPattern = "(checkVar\\(.*\\);)";
-            Pattern lengthPattern = Pattern.compile(checkLengthPattern);
-            Matcher lengthMatch = lengthPattern.matcher(str);
-            if(lengthMatch.find())
-            {
-                String hold = lengthMatch.group(0).substring(9);
-                System.out.println("Number of hold = " + hold);
-                String soutLengthPattern = "([a-z0-9A-Z]*[+][a-z0-9A-Z]*)";
-                Pattern Patternout = Pattern.compile(soutLengthPattern);
-                Matcher soutMatch = Patternout.matcher(hold);
-                 if(soutMatch.find()){
-                        String[] holdarr = soutMatch.group(0).split("[+]");
-                        str = str.replaceAll("checkVar\\(.*\\);", "System.out.println(" + holdarr[0] + ".length()+" + holdarr[1] + ".length());");
-                    }
-            }
             writer.println(str);
         }
-        if(!(error)){
-
         writer.println("}");
         writer.println("}");
         writer.close();
@@ -106,8 +82,6 @@ public class FinalProject {
         pb.directory(dir);
         Process p = pb.start();*/
     }
-    }
-
     public static boolean regexChecker(String theRegex, String str2Check) {
         Pattern checkRegex = Pattern.compile(theRegex);
         Matcher regexMatcher = checkRegex.matcher(str2Check);
