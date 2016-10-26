@@ -1,7 +1,7 @@
-int i = 0;
-int j = 0;
+int i = 1;
+int j = 1;
 int k_1 = 0;
-float average = 99.1131;
+double average = 99.1131;
 
 String num = "hello world";
 String word1 = "Pedro";
@@ -16,6 +16,11 @@ iprint(k_1);
 iprint(num);
 iprint(average);
 
+iprint(i + j);
+iprint(i - j);
+iprint(i/j);
+iprint(i * j);
+iprint(i % j);
 //print string length
 getHaba(word1);
 getHaba("test");
