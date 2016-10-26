@@ -75,10 +75,19 @@ public class FinalProject {
                         writer.println(str);
                         variables.add(getVariable(str));
                         strVar.add(getVariable(str));
-                    } else if (regexChecker("float [a-zA-Z]{1,}[0-9_]* [=] [-]*\\d{1,8}[.]\\d{1,8}[;]", str)) {
+                    } else if (regexChecker("double [a-zA-Z]{1,}[0-9_]* [=] [-]*\\d{1,8}[.]\\d{1,8}[;]", str)) {
                         writer.println(str);
-                        variables.add(getVariable(str));
-                    } else {
+                        variables.add(getVariable(str));   
+                    } else if (regexChecker("[(]([a-zA-Z0-9_]*\\s?[+\\-/*%]\\s?[a-zA-Z0-9_]+)*[)][;]", str)) {
+                        
+                            //wala pang variable declaration
+                                str = str.replace("iprint", "System.out.println");
+                                writer.println(str);
+                            
+                        
+                    }
+                    
+                    else {
                         writer.println(str + " //May syntax error");
                     }
                 }
