@@ -16,11 +16,11 @@ iprint(k_1);
 iprint(num);
 iprint(average);
 
-iprint(i + j);
-iprint(i - j);
-iprint(i/j);
-iprint(i * j);
-iprint(i % j);
+compute(i + j);
+compute(i - j);
+compute(i / j);
+compute(i * j);
+compute(i % j);
 //print string length
 getHaba(word1);
 getHaba("test");

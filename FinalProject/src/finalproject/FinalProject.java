@@ -20,6 +20,7 @@ public class FinalProject {
         Set<String> variables = new HashSet<String>();
         Set<String> strVar = new HashSet<String>();
         boolean error = false;
+        String[] parts;
 
         //reads the file "input.txt"
         PrintWriter writer = new PrintWriter("Test.java", "UTF-8");
@@ -50,11 +51,11 @@ public class FinalProject {
                         }
                     } else if (regexChecker("getHaba[(][\"][a-zA-Z0-9 -+*/><{}:,']*[\"][)][;]", str)) {
                         if (getHabaString(str) != "wala") {
-                            writer.println("String programInput = "+getHabaString(str)+";");
+                            writer.println("String programInput = " + getHabaString(str) + ";");
                             str = str.replace("getHaba", "System.out.println");
                             str = str.replace(getHabaString(str), "programInput.length()");
                             writer.println(str);
-                        }else{
+                        } else {
                             writer.println(str + " //Syntax Error");
                         }
                     } else if (regexChecker("getHaba[(][a-zA-Z]*[0-9_]*[)][;]", str)) {
@@ -77,17 +78,26 @@ public class FinalProject {
                         strVar.add(getVariable(str));
                     } else if (regexChecker("double [a-zA-Z]{1,}[0-9_]* [=] [-]*\\d{1,8}[.]\\d{1,8}[;]", str)) {
                         writer.println(str);
-                        variables.add(getVariable(str));   
-                    } else if (regexChecker("[(]([a-zA-Z0-9_]*\\s?[+\\-/*%]\\s?[a-zA-Z0-9_]+)*[)][;]", str)) {
-                        
-                            //wala pang variable declaration
-                                str = str.replace("iprint", "System.out.println");
-                                writer.println(str);
-                            
-                        
-                    }
-                    
-                    else {
+                        variables.add(getVariable(str));
+                    } else if (regexChecker("compute[(](([a-zA-Z]+[0-9_]*)*\\s?[+\\-/*%]\\s?([a-zA-Z]+[0-9_]*)+)*[)][;]", str)) {
+                        //wala pang variable declaration
+                        str = str.replace("compute", "System.out.println");
+                        parts = str.split(" ");
+                        boolean correct = true;
+                        for (int i = 0; i < parts.length - 1; i++) {
+                            parts[i] = parts[i].replace("compute(", "");
+                            parts[i] = parts[i].replace(")", "");
+                            if (variables.contains(parts[i])) {
+                                correct = false;
+                                break;
+                            }
+                        }
+                        if (correct) {
+                            writer.println(str);
+                        }else{
+                            writer.println(str + " //Maling Formula");
+                        }
+                    } else {
                         writer.println(str + " //May syntax error");
                     }
                 }
@@ -137,8 +147,8 @@ public class FinalProject {
         }
         return "wala";
     }
-    
-    public static String getHabaString(String input){
+
+    public static String getHabaString(String input) {
         Pattern checkRegex = Pattern.compile("[(][\"][a-zA-Z]{1,}[0-9_]*[\"][)]");
         Matcher regexMatcher = checkRegex.matcher(input);
 
