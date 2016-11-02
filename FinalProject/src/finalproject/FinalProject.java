@@ -88,7 +88,11 @@ public class FinalProject {
                             parts[i] = parts[i].replace("compute(", "");
                             parts[i] = parts[i].replace(")", "");
                             if (variables.contains(parts[i])) {
-                                correct = false;
+                                correct = true;
+                            }else if(parts[i] == "+"||parts[i] == "-"||parts[i] == "*"||parts[i] == "/"){
+                                correct=true;
+                            }else{
+                                correct=false;
                                 break;
                             }
                         }
