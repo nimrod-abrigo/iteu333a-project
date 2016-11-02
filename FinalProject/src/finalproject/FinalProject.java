@@ -89,16 +89,16 @@ public class FinalProject {
                             parts[i] = parts[i].replace(")", "");
                             if (variables.contains(parts[i])) {
                                 correct = true;
-                            }else if(parts[i] == "+"||parts[i] == "-"||parts[i] == "*"||parts[i] == "/"){
-                                correct=true;
-                            }else{
-                                correct=false;
+                            } else if (parts[i] == "+" || parts[i] == "-" || parts[i] == "*" || parts[i] == "/") {
+                                correct = true;
+                            } else {
+                                correct = false;
                                 break;
                             }
                         }
                         if (correct) {
                             writer.println(str);
-                        }else{
+                        } else {
                             writer.println(str + " //Maling Formula");
                         }
                     } else {
