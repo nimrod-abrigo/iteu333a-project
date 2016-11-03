@@ -83,24 +83,11 @@ public class FinalProject {
                         //wala pang variable declaration
                         str = str.replace("compute", "System.out.println");
                         parts = str.split(" ");
-                        boolean correct = true;
                         for (int i = 0; i < parts.length - 1; i++) {
                             parts[i] = parts[i].replace("compute(", "");
                             parts[i] = parts[i].replace(")", "");
-                            if (variables.contains(parts[i])) {
-                                correct = true;
-                            } else if (parts[i] == "+" || parts[i] == "-" || parts[i] == "*" || parts[i] == "/") {
-                                correct = true;
-                            } else {
-                                correct = false;
-                                break;
-                            }
                         }
-                        if (correct) {
-                            writer.println(str);
-                        } else {
-                            writer.println(str + " //Maling Formula");
-                        }
+                        writer.println(str);
                     } else {
                         writer.println(str + " //May syntax error");
                     }

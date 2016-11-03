@@ -25,7 +25,4 @@ compute(i % j);
 getHaba(word1);
 getHaba("test");
 
-//Output: PedroPenduco
-Concat(word1+word2);
-//Output: HelloWorld
-Concat("Hello"+"World");
+word1.dugtong(word2);
