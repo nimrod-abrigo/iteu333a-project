@@ -25,6 +25,8 @@ System.out.println(word1.length());
 String programInput = "test";
 System.out.println(programInput.length());
 
-word1.dugtong(word2); //May syntax error
+string programdugtong = word1.concat(word2);
+System.out.println(programdugtong)
+word1.dugtong(word2);
 }
 }

@@ -34,7 +34,8 @@ public class FinalProject {
             } else if (str.length() == 0) {
                 writer.println();
                 continue;
-            } else if (str.contains(";")) {
+            
+            }else if (str.contains(";")) {
                 if (str.charAt(str.length() - 1) == ';') {
                     if (regexChecker("iprint[(][\"][a-zA-Z0-9 -+*/><{}:,']*[\"][)][;]", str)) {
                         str = str.replace("iprint", "System.out.println");
@@ -79,7 +80,8 @@ public class FinalProject {
                     } else if (regexChecker("double [a-zA-Z]{1,}[0-9_]* [=] [-]*\\d{1,8}[.]\\d{1,8}[;]", str)) {
                         writer.println(str);
                         variables.add(getVariable(str));
-                    } else if (regexChecker("compute[(](([a-zA-Z]+[0-9_]*)*\\s?[+\\-/*%]\\s?([a-zA-Z]+[0-9_]*)+)*[)][;]", str)) {
+                    }
+                    else if (regexChecker("compute[(](([a-zA-Z]+[0-9_]*)*\\s?[+\\-/*%]\\s?([a-zA-Z]+[0-9_]*)+)*[)][;]", str)) {
                         //wala pang variable declaration
                         str = str.replace("compute", "System.out.println");
                         parts = str.split(" ");
@@ -102,11 +104,23 @@ public class FinalProject {
                             writer.println(str + "//maling formula");
                         }
 
-                    } else {
+                        }else if (regexChecker("[a-zA-Z]{1,}[0-9_a-zA-Z]*[.]dugtong[(][a-zA-Z]{1,}[0-9_a-zA-Z]*[)][;]", str)) {
+                        if (getVarFromPrint(str) != "wala") {
+                            String variable1 = getVarConcat(str);
+                            String variable2 = getVarFromPrint(str);
+                            if (variables.contains(variable1) || variables.contains(variable2)) {
+                                writer.println("string programdugtong = " + variable1 + ".concat(" + variable2 + ");");
+                                writer.println("System.out.println(programdugtong)");
+                                writer.println(str);
+                            }
+                    else {
                         writer.println(str + " //May syntax error");
                     }
-                }
-            } else {
+                        }
+                        }
+            }
+            }
+            else {
                 writer.println(str + " //Walang Semi Colon");
             }
         }
@@ -167,5 +181,17 @@ public class FinalProject {
         }
         return "wala";
     }
+    public static String getVarConcat(String input) {
+        Pattern checkRegex = Pattern.compile("[a-zA-Z]{1,}[0-9_a-zA-Z]*[.]");
+        Matcher regexMatcher = checkRegex.matcher(input);
 
+        while (regexMatcher.find()) {
+            if (regexMatcher.group().length() != 0) {
+                String var = regexMatcher.group();
+                var = var.replace(".", "");
+                return var;
+            }
+        }
+        return "wala";
+    }
 }
