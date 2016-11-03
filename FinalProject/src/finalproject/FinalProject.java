@@ -83,11 +83,25 @@ public class FinalProject {
                         //wala pang variable declaration
                         str = str.replace("compute", "System.out.println");
                         parts = str.split(" ");
+                        boolean sira = false;
                         for (int i = 0; i < parts.length - 1; i++) {
-                            parts[i] = parts[i].replace("compute(", "");
+                            parts[i] = parts[i].replace("System.out.println(", "");
                             parts[i] = parts[i].replace(")", "");
+                            if (parts[i] == "+" || parts[i] == "-" || parts[i] == "*" || parts[i] == "/") {
+                                continue;
+                            } else if (regexChecker("[a-zA-Z]{1,}[0-9_]*", parts[i])) {
+                                continue;
+                            } else {
+                                sira = true;
+                                break;
+                            }
                         }
-                        writer.println(str);
+                        if (sira) {
+                            writer.println(str);
+                        } else {
+                            writer.println(str + "//maling formula");
+                        }
+
                     } else {
                         writer.println(str + " //May syntax error");
                     }
