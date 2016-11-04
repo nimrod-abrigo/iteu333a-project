@@ -117,12 +117,12 @@ public class FinalProject {
                         writer.println(str + " //May syntax error");
                     }
                         }
-                        }
-            }
-            }
+                    }
+                }
             else {
                 writer.println(str + " //Walang Semi Colon");
             }
+                }
         }
         writer.println("}");
         writer.println("}");
